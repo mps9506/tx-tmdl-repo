@@ -1,0 +1,30 @@
+---
+title: "DataExplore"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## EPADATA
+
+Import the data:
+```{r}
+wd <- here::here()
+fp <- file.path(wd, "RawData/epa_tx_tmdl.csv")
+df <- read.csv(fp)
+```
+
+
+need to clean it, why does this download with js embedded in the columns?!?!
+```{r}
+library(dplyr)
+
+df <- df %>%
+  select(ID = Listed.Water.ID, Name = Listed.Water.Name, Type = Water.Type.Group, TMDL_ID = Current.TMDL.ID, Need = TMDL.Development.Status)
+head(df)
+```
+
+Appears that ID references the TCEQ Assessment Unit, rest are self explanitory. Would be great to link these to HUCs, NHD, and nearest STORET and USGS stations.
+
